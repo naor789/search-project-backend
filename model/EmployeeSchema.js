@@ -11,7 +11,10 @@ const employeeSchema = new mongoose.Schema({
         EmployeeRole: { type: String, required: true, },
         ImageURL: { type: String, required: true, }
     },
-
+    isFavorite: {
+        type: Boolean,
+        default: false
+}
 });
 
 module.exports = mongoose.model('Employee', employeeSchema);

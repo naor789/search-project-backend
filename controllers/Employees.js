@@ -43,6 +43,22 @@ const searchEmployee = async (req, res) => {
 
 };
 
+const addEmployeeToFavorite = async (req, res) => {
+    const { id, isFavorite } = req.body;
+    Employee.find({ _id: id }, (err, employee) => {
+        if (err) {
+            throw err;
+        }
+        Employee.findByIdAndUpdate({ _id: id }, { $set: { isFavorite: isFavorite } }, { new: true },
+            (err, employee) => {
+                if (err) {
+                    return res.status(400).json(err)
+                }
+                res.json(employee);
+            });
+    })
+}
+
 const createEmployee = async (request, response) => {
     const employee = new Employee(request.body);
     try {
@@ -54,4 +70,4 @@ const createEmployee = async (request, response) => {
 };
 
 
-module.exports = { searchEmployee, createEmployee, getOneEmployee }
+module.exports = { searchEmployee, createEmployee, getOneEmployee, addEmployeeToFavorite }
